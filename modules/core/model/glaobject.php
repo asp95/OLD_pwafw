@@ -4,6 +4,8 @@
 class core_model_glaobject extends ArrayObject{
 	private $data;
 
+	private $core;
+
 	public function __construct($k = []){
 		$this->data = $k;
 		parent::__construct($this->data, self::ARRAY_AS_PROPS);
@@ -62,6 +64,13 @@ class core_model_glaobject extends ArrayObject{
 				return null;
 			}
 		}
+	}
+
+	public function getCore(){
+		return $this->core;
+	}
+	public function setCore($core){
+		return $this->core = $core;
 	}
 
 	public function getKeyname($str){

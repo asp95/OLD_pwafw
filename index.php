@@ -25,6 +25,7 @@ $core->start();
 		 ?>
 	</head>
 	<body>
+		<?php /* $core->getModel("testmodule.testmodel");*/ ?>
 		<?php /* echo $core->getTemplates(); */ ?>
 	</body>
 </html>

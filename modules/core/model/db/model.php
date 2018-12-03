@@ -2,11 +2,11 @@
 
 class core_model_db_model extends core_model_glaobject{
 	public function load($id, $field = ""){
-		/*if ($this->getData()){
+		if ($this->getData()){
 			return $this;
-		}*/
+		}
 
-		$sql = new mysqli("127.0.0.1", "root", "", "pwafw");
+		$sql = new mysqli("127.0.0.1", "root", "root", "pwafw");
 		if ($sql->connect_errno) {
 		    throw new Exception("Fallo al conectar a MySQL: " . $mysqli->connect_error);
 		}
