@@ -1,0 +1,13 @@
+{
+    "modules" : [
+        {
+            "name" : "module1",
+            "enabled" : "true"
+        },
+        {
+            "name" : "module2",
+            "enabled" : "true"
+        },
+    ],
+    "date_updated" : "1543809651"
+}
