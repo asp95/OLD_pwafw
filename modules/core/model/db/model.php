@@ -27,8 +27,12 @@ class core_model_db_model extends core_model_glaobject{
 		return $this;
 	}
 
-	public function getTableName(){
-		$str = get_class($this);
+	public function getTableName($model = false){
+		if ($model){
+			$str = get_class($model);
+		} else {
+			$str = get_class($this);
+		}
 		$arrStr = explode("_", $str);
 		$finalStr = "";
 		$k = 0;
@@ -44,7 +48,9 @@ class core_model_db_model extends core_model_glaobject{
 		return $finalStr;
 	}
 
-	public function getPrimaryIdx(){
-		return $this->getTableName()."_id";
+	public function getPrimaryIdx($model = false){
+		return $this->getTableName($model)."_id";
 	}
+
+	//FUNCTION ITERATOR!!
 }

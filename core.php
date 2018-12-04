@@ -81,6 +81,9 @@ class Core{
 
 	public function getModel($modelStr){
 		$arrModel = explode(".", $modelStr);
+		if (!is_file($this->getModelFile($arrModel))){
+			$this->printError("El modelo/módulo ".$modelStr." no se pudo encontrar");
+		}
 		require_once $this->getModelFile($arrModel);
 		$modelStr = $this->getModelStr($arrModel);
 		$model = new $modelStr();
@@ -115,6 +118,10 @@ class Core{
 		}
 		$strFileName = trim($strFileName, "_");
 		return $strFileName;
+	}
+
+	public function printError($msg){
+		die("<div id='main-error' style='display:none'>".$msg."</div>");
 	}
 
 	public function end(){

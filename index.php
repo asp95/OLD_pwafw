@@ -12,6 +12,7 @@ $core->start();
 		<?php if ($config = $core->getConfig()->getVar("system.initial-scale-string")){ ?>
 			<meta name="viewport" content="<?php echo $config; ?>">
 		<?php } ?>
+		<?php die(get_class($core->getModel("modulo1.prueba")->functionPrueba())); ?>
 		<?php /*
 			foreach ($core->getCssList() as $cssFile => $optionalData) {
 				echo '<link rel="stylesheet" href="'.$cssFile.'" '.$core->buildAttributes($optionalData).'>';
