@@ -5,6 +5,7 @@ require_once "core.php";
 $core = new Core("tienda1");
 $core->start();
 
+die(var_export($core->getModel("modulo1.prueba")->functionPrueba(), true));
 ?>
 
 <html>
@@ -12,7 +13,6 @@ $core->start();
 		<?php if ($config = $core->getConfig()->getVar("system.initial-scale-string")){ ?>
 			<meta name="viewport" content="<?php echo $config; ?>">
 		<?php } ?>
-		<?php die(get_class($core->getModel("modulo1.prueba")->functionPrueba())); ?>
 		<?php /*
 			foreach ($core->getCssList() as $cssFile => $optionalData) {
 				echo '<link rel="stylesheet" href="'.$cssFile.'" '.$core->buildAttributes($optionalData).'>';
