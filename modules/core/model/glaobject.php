@@ -1,17 +1,20 @@
 <?php 
 
 
-class core_model_glaobject extends ArrayObject{
+class core_model_glaobject /*extends ArrayObject*/{
 	private $data;
 
 	private $core;
 
 	public function __construct($k = []){
+		if ($k === false){
+			return false;
+		}
 		$this->data = $k;
-		parent::__construct($this->data, self::ARRAY_AS_PROPS);
+		//parent::__construct($this->data, self::ARRAY_AS_PROPS);
 	}
 
-	public function append($val){
+	/*public function append($val){
 		$this->data[] = $val;
 		parent::append($val);
 	}
@@ -52,11 +55,12 @@ class core_model_glaobject extends ArrayObject{
 	public function unserialize($str){
 		$this->data = json_decode($str);
 		parent::unserialize(serialize(json_decode($str)));
-	}
+	}*/
 
 	public function __call($fnName, $args){
 		if (strpos($fnName, "set") === 0){
-			return $this->data[$this->getKeyname($fnName)] = $args[0];
+			$this->data[$this->getKeyname($fnName)] = $args[0];
+			return $this;
 		} else if (strpos($fnName, "get") === 0) {
 			if (isset($this->data[$this->getKeyname($fnName)])){
 				return $this->data[$this->getKeyname($fnName)];
@@ -97,7 +101,27 @@ class core_model_glaobject extends ArrayObject{
 		return $keyname;
 	}
 
-	public function getData(){
+	public function getCaller($keyName, $type = "get"){
+        $arrName = explode("_", $keyName);
+        foreach ($arrName as $k => $currPart) {
+            if (is_numeric($currPart[0])){
+                $currPart = "_".$currPart;
+            }
+            $arrName[$k] = ucwords($currPart);
+        }
+        return $type.implode("", $arrName);
+	}
+	public function getGetter($keyName){
+		return $this->getCaller($keyName);
+	}
+	public function getSetter($keyName){
+		return $this->getCaller($keyName, "set");
+	}
+
+	public function getData($key = false){
+		if ($key != false){
+			return $this->data[$key];
+		}
 		if ($this->data == []){
 			return null;
 		} else {

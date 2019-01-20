@@ -80,7 +80,14 @@ class Core{
 	}
 
 	public function getModel($modelStr){
-		$arrModel = explode(".", $modelStr);
+		if (is_object($modelStr)){
+			$modelStr = get_class($modelStr);
+			$arrModel = explode("_", $modelStr);
+			unset($arrModel[1]);
+			$arrModel = array_values($arrModel);
+		} else {
+			$arrModel = explode(".", $modelStr);
+		}
 		if (!is_file($this->getModelFile($arrModel))){
 			$this->printError("El modelo/módulo ".$modelStr." no se pudo encontrar");
 		}
