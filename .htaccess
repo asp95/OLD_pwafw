@@ -1,7 +1,7 @@
 RewriteEngine on
 Options -Indexes
 
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^/test$ service.php?q=$1 [PT]
-RewriteRule . index.php [L]
+RewriteRule ^js\.php js.php [QSA,L]
+RewriteRule ^css\.php css.php [QSA,L]
+RewriteRule ^service\.php service.php [QSA,L]
+RewriteRule ^.* index.php [QSA,L]

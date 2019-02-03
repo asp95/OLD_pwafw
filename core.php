@@ -48,6 +48,11 @@ class Core{
 		return @unlink(__DIR__."/install-error.lock");
 	}
 
+	public function getJsonConfig($path){
+		$arrJsonConfig = json_decode(file_get_contents(__DIR__."/modules/config.json"), true);
+		return $arrJsonConfig[$path];
+	}
+
 	public function buildAttributes($arrData){
 		$str = " ";
 		foreach ($arrData as $k => $v) {

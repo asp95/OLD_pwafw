@@ -18,7 +18,15 @@ class core_model_db_model extends core_model_glaobject{
 			return $this->_sql;
 		}
 
-		$this->_sql = new mysqli("127.0.0.1", "root", "", "pwafw");
+		$arrDbConfig = $this->getCore()->getJsonConfig("db");
+
+		$this->_sql = new mysqli(
+			$arrDbConfig["host"], 
+			$arrDbConfig["user"], 
+			$arrDbConfig["password"], 
+			$arrDbConfig["db"]
+		);
+		
 		if ($this->_sql->connect_errno) {
 			throw new Exception("Fallo al conectar a MySQL: " . $this->_sql->connect_error);
 		}
