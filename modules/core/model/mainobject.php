@@ -1,7 +1,7 @@
 <?php 
 
 
-class core_model_glaobject {
+class core_model_mainobject {
 	private $data;
 
 	private $core;

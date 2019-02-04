@@ -1,6 +1,6 @@
 <?php 
 
-class core_model_db_model extends core_model_glaobject{
+class core_model_db_model extends core_model_mainobject{
 	protected $_currCursor = null;
 
 	protected $_describe = null;

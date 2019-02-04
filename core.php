@@ -1,9 +1,9 @@
 <?php 
 class Core{
-	public $glaObject;
+	public $mainObject;
 
 	function __construct(){
-		$this->loadGlaObject();
+		$this->loadMainobject();
 		spl_autoload_register(function($className){
 			if ($className == "controllers_error_404"){
 				die(json_encode(debug_backtrace()));
@@ -14,69 +14,14 @@ class Core{
 		});
 	}
 
-	public function loadGlaObject(){
-		$this->glaObject = $this->getModel("core.glaobject");
+	public function loadMainobject(){
+		$this->mainObject = $this->getModel("core.mainobject");
 	}
 
 	public function start(){
 		return true;
-		/*$this->unsetInstallError();
-		if ($this->getInstallMode()){
-			try {
-				$this->runInstall();
-				$this->unsetInstallMode();
-			} catch (Exception $e) {
-				$this->setInstallError(json_encode($e->getMassage()));
-				$this->unsetInstallMode();
-			}
-
-		}*/
 	}
 
-	/*public function getInstallMode(){
-		return file_exists(__DIR__."/install-mode.lock");
-	}
-
-	public function unsetInstallMode(){
-		return @unlink(__DIR__."/install-mode.lock");
-	}
-
-	public function setInstallError(){
-		return file_put_contents(__DIR__."/install-error.lock", " ");
-	}
-
-	public function unsetInstallError(){
-		return @unlink(__DIR__."/install-error.lock");
-	}
-
-
-
-	public function buildAttributes($arrData){
-		$str = " ";
-		foreach ($arrData as $k => $v) {
-			$str.=  $this->clean("attribute_name", $k)."=\"";
-			if (is_array($v)){
-				$str .= json_encode($v);
-			} else {
-				$str .= $v."\" ";
-			}
-		}
-	}
-
-	public function clean($clean_type, $str){
-		switch ($clean_type) {
-			case 'attribute_name':
-					$str = strtolower(trim($str));
-					$str = preg_replace('/[^a-z0-9]/', '-', $str);
-					return $str;
-				break;
-			
-			default:
-				# code...
-				break;
-		}
-	}
-*/
 	public function getJsonConfig($path){
 		$arrJsonConfig = json_decode(file_get_contents(__DIR__."/modules/config.json"), true);
 		return $arrJsonConfig[$path];
@@ -95,7 +40,7 @@ class Core{
 			$arrModel = explode(".", $modelStr);
 		}
 		if (!is_file($this->getModelFile($arrModel))){
-			throw new Exception("El modelo/módulo ".$modelStr." no se pudo encontrar", 1);
+			throw new Exception("El modelo/modulo ".$modelStr." no se pudo encontrar", 1);
 		}
 		require_once $this->getModelFile($arrModel);
 		$modelStr = $this->getModelStr($arrModel);
@@ -165,11 +110,7 @@ class Core{
 		return $strFileName;
 	}
 
-	public function printError($msg){
-		die("<div id='main-error' style='display:none'>".$msg."</div>");
-	}
-
-	public function getMainDir(){
+	public function getMainDir(){ //TODO
 		return "pwafw";
 	}
 
