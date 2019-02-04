@@ -119,6 +119,10 @@ class core_model_db_model extends core_model_mainobject{
 	}
 
 	public function fetch() {
+		if (!$this->_currCursor){
+			throw new Exception("no se pudo realizar la consulta a DB", 4);
+			
+		}
 		if (is_null($this->_currCursor) && empty($this->_items[$this->_itemIdx])){
 			$this->_itemIdx = 0;
 			return false;

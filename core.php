@@ -120,6 +120,11 @@ class Core {
 		return "pwafw";
 	}
 
+	public function printError($m){
+		echo $m;
+		return;
+	}
+
 	public function end(){
 		return;
 	}

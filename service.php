@@ -17,10 +17,11 @@ try {
 	$arrPath = array_values($arrPath);
 	if (count($arrPath) < 3){
 		for ($i = 0 ; $i < 3 ; $i++){
+			/*$currPath = $arrPath[$i];
 			if ($currPath == $core->getMainDir()){
 				$i--;
 				continue;
-			}
+			}*/
 			if (!isset($arrPath[$i])){
 				$arrPath[$i] = "index";
 			}
