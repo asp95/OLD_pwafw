@@ -3,6 +3,12 @@ var core = {
 		var path = window.location.pathname;
 		var pathData = core.parseQueryString(window.location.search);
 		core.sendRequest(path, pathData, core.rx);
+		window.addEventListener("popstate", core.init);
+		window.addEventListener("beforeunload", (event) => {
+			console.log("unload");
+			event.preventDefault();
+			return false;
+		})
 	},
 	parseQueryString : function(str){
 		str = str.substring(1, str.length);
@@ -165,8 +171,7 @@ var core = {
 		handle : function(element, event){
 			if (element.href.split("/")[3] == MAIN_DIR.split("/")[0] && element.href.split("/")[2] == document.location.host){
 				console.log("LL");
-				history.pushState({}, "", element.href);
-				core.init();
+				history.replaceState({}, "", element.href);
 				event.preventDefault();
 				return false;
 			} 

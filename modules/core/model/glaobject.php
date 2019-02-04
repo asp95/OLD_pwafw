@@ -1,7 +1,7 @@
 <?php 
 
 
-class core_model_glaobject /*extends ArrayObject*/{
+class core_model_glaobject {
 	private $data;
 
 	private $core;
@@ -11,51 +11,7 @@ class core_model_glaobject /*extends ArrayObject*/{
 			return false;
 		}
 		$this->data = $k;
-		//parent::__construct($this->data, self::ARRAY_AS_PROPS);
 	}
-
-	/*public function append($val){
-		$this->data[] = $val;
-		parent::append($val);
-	}
-
-	public function exchangeArray($val){
-		$this->data = $val;
-		parent::exchangeArray($val);
-	}
-
-	public function offsetGet($i){
-		return $this->data[$i];
-	}
-
-	public function offsetSet($i, $v){
-		$this->data[$this->getKeyname($i)] = $v;
-		parent::offsetSet($this->getKeyname($i), $v);
-	}
-
-	public function offsetUnset($k){
-		unset($this->data[$this->getKeyname($k)]);
-		parent::unset($k);
-	}
-
-	public function serialize(){
-		return json_encode($this->data);
-	}
-
-	public function uasort($fn){
-		uasort($this->data, $fn);
-		parent::uasort($fn);
-	}
-
-	public function uksort($fn){
-		uksort($this->data, $fn);
-		parent::uksort($fn);
-	}
-
-	public function unserialize($str){
-		$this->data = json_decode($str);
-		parent::unserialize(serialize(json_decode($str)));
-	}*/
 
 	public function __call($fnName, $args){
 		if (strpos($fnName, "set") === 0){

@@ -1,10 +1,9 @@
 <?php 
-
 require_once "core.php";
-
-$core = new Core("tienda1");
+$core = new Core();
 $core->start();
-$mainDir = "pwafw";
+
+$mainDir = $core->getMainDir();
 ?>
 
 <html>

@@ -12,8 +12,4 @@ class core_model_tools extends core_model_db_model{
 
 		return implode(" ", $arrStrAttrs);
 	}
-
-	public function getCssList(){
-		
-	}
 }
