@@ -8,7 +8,15 @@ var core = {
 			console.log("unload");
 			event.preventDefault();
 			return false;
-		})
+		});
+
+		/*
+			por config. de apache, todas las urls llaman al mismo index.php.
+
+			cuando inicia la página, este core envía el path, la info por querystring
+
+			core.rx es el callback, procesa los components, el diseño (donde se ubican los components), y la información devuelta para llenar los campos del component
+		*/
 	},
 	parseQueryString : function(str){
 		str = str.substring(1, str.length);
@@ -33,13 +41,22 @@ var core = {
 	rx : function(resp){
 		var arrResp = JSON.parse(resp.responseText);
 		core.setComponents(arrResp.componentsHtml);
+		/*
+			core.setComponents() carga los components enviados a #components-cache
+		*/
 		var arrNewComponents = core.loadDesign(arrResp.design);
+		/*
+			core.loadDesign()  limpia los divs que son marcados para limpiar mediante _clear_ y copia los components de #components-cache a la ruta marcada de cada component
+		*/
 		for (var i in arrResp.data){
 			core.preProcess(i, arrResp.data[i]);
 			if (window[i]){
 				window[i].load(arrResp.data[i], arrNewComponents[i]);
 			}
 		}
+		/*
+
+		*/
 		core.parseHrefHandlers();
 
 	},

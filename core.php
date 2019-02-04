@@ -1,13 +1,13 @@
 <?php 
-class Core{
+class Core {
 	public $mainObject;
 
 	function __construct(){
 		$this->loadMainobject();
 		spl_autoload_register(function($className){
-			if ($className == "controllers_error_404"){
+			/*if ($className == "controllers_error_404"){
 				die(json_encode(debug_backtrace()));
-			}
+			}*/
 			$arrClassName = explode("_", $className);
 			unset($arrClassName[1]);
 			require_once $this->getModelFile($arrClassName, true);
@@ -27,6 +27,12 @@ class Core{
 		return $arrJsonConfig[$path];
 	}
 	public function getConfig(){
+		/*
+			Todos los models tienen una identificación en string. 
+			"core.config.data" ( $this->getCore()->getModel("core.config.data") )
+			 = nueva instancia de model core_model_config_data (/modules/core/model/config/data.php)
+
+		*/
 		return $this->getModel("core.config.data");
 	}
 
