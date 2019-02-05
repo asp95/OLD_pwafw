@@ -42,11 +42,11 @@ var core = {
 		var arrResp = JSON.parse(resp.responseText);
 		core.setComponents(arrResp.componentsHtml);
 		/*
-			core.setComponents() carga los components enviados a #components-cache
+			core.setComponents(componentsArray) carga los components enviados a #components-cache
 		*/
 		var arrNewComponents = core.loadDesign(arrResp.design);
 		/*
-			core.loadDesign()  limpia los divs que son marcados para limpiar mediante _clear_ y copia los components de #components-cache a la ruta marcada de cada component
+			core.loadDesign(designData)  limpia los divs que son marcados para limpiar mediante _clear_ y copia los components de #components-cache a la ruta marcada de cada component
 		*/
 		for (var i in arrResp.data){
 			core.preProcess(i, arrResp.data[i]);
@@ -55,9 +55,15 @@ var core = {
 			}
 		}
 		/*
+			core.preProcess(componentName, dataModel) Realiza el reemplazo de todas las variables del component por su valor en el dataModel
 
+			window[i].load(dataModel, currentComponent); Si en JS existe un objeto con el mismo nombre que el component, va a llamar a la función "load" de este objeto, pasándole el dataModel correspondiente al component, y el component ya cargado en la página
 		*/
 		core.parseHrefHandlers();
+
+		/*
+			para todos los <a>, revisa si es una url del mismo sistema, y evita que se procese como un link standar (para no recargar toda la página), y la pasa por el sistema del framework
+		*/
 
 	},
 	setComponents : function(arrComponents){

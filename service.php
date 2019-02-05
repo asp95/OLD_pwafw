@@ -1,4 +1,12 @@
 <?php 
+/*
+service.php es la "puerta" al backend.
+
+TODO : voy a rehacer todo el sistema de controllers. Me di cuenta que no es necesario hacer los controllers con código, y directamente se pueden hacer en DB.
+
+Esto tmb me va a permitir armar un administrador visual para crear páginas en el framework :)
+
+*/
 require_once "core.php";
 $core = new Core();
 $core->start();
@@ -37,9 +45,9 @@ try {
 
 		if ($i < count($arrPath)-2){
 			$currControllerCall[] = $currPath;
-			error_log(implode(".", $currControllerCall));
+			// error_log(implode(".", $currControllerCall));
 		} else {
-			error_log(implode(".", $currControllerCall));
+			// error_log(implode(".", $currControllerCall));
 			$currController = $core->getController(implode(".", $currControllerCall));
 			echo json_encode($currController->$currPath(json_decode($_POST["getData"]), json_decode($_POST["formData"])));
 		}
