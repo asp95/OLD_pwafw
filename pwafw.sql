@@ -23,6 +23,12 @@ CREATE TABLE IF NOT EXISTS `core_controller` (
   UNIQUE KEY `component_name` (`component_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
-
+/*
+  component_name : el nombre del componente. respeta la nomenclatura de los models
+  design_path : esta info se manda a front. Donde se ubica este componente (CSS path)
+  clear_path : Cuando se use este componente, que sección de la página se debe limpiar (borrar el contenido) antes. Puede estar vacío.
+  data_model : Model que se va a usar para enviar la info dataModel al front (que después se usa para llenar el component + procesar en JS)
+    Se llamará a la función "loadByReqest()" del model declarado, pasarndo como argumento $get y $post
+*/
 INSERT INTO `core_controller` (`core_controller_id`, `component_name`, `design_path`, `data_model`, `clear_path`) VALUES
 	(1, 'error_404', '#main-content', 'core.error.404', '#main-content');
