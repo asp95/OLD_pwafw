@@ -69,9 +69,10 @@ var core = {
 	setComponents : function(arrComponents){
 		var componentsCache = document.querySelector("#components-cache");
 		for(var componentName in arrComponents){
+			console.log(componentName);
 			if (!componentsCache.querySelector(".component."+componentName)){
-				componentsCache.innerHTML += arrComponents[componentName];
-				var newComponent = componentsCache.querySelector("*:last-child");
+				componentsCache.innerHTML += "<cmp>"+arrComponents[componentName]+"</cmp>";
+				var newComponent = componentsCache.querySelector("cmp:last-child");
 				newComponent.classList.add("component");
 				newComponent.classList.add(componentName);
 			}
@@ -84,6 +85,7 @@ var core = {
 				continue;
 			}
 			if (componentName == "_clear_"){
+				continue;
 				var arrClearComponents = document.querySelectorAll(arrDesign[componentName]+" > *");
 				for(var i = 0 ; i < arrClearComponents.length ; i++){
 					arrClearComponents[i].classList.add("closing");
@@ -96,8 +98,8 @@ var core = {
 
 			var arrParentComponents = document.querySelectorAll(arrDesign[componentName]);
 			for(var i = 0 ; i < arrParentComponents.length ; i++){
-				arrParentComponents[i].appendChild(document.querySelector("#components-cache .component."+componentName).cloneNode(true));
-				var newComponent = arrParentComponents[i].querySelector(".component."+componentName);
+				arrParentComponents[i].appendChild(document.querySelector("#components-cache cmp.component."+componentName).cloneNode(true));
+				var newComponent = arrParentComponents[i].querySelector("cmp.component."+componentName);
 				newComponent.classList.add("opening");
 				setTimeout((newComponent => { return () => {
 					newComponent.classList.remove("opening");

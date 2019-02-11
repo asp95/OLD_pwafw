@@ -18,42 +18,33 @@ if (!isset($_POST["getData"])){
 	$_POST["getData"] = [];
 }
 
-try {
+$path = clearPath($core, $_POST["path"]);
+
+$currController = $core->getModel("core.controller")->load($path, "path");
+if (empty($currController->getID())){ // 404
+	$e404Controller = $core->getModel("core.controller")->load("[404]", "path");
+	if (empty($e404Controller->getID())) die("ERROR: 404 no configurado");
+
+	echo json_encode($e404Controller->getResponseData($_POST));
+	$core->end();
+}
+echo json_encode($currController->getResponseData($_POST));
+$core->end();
+
+
+function clearPath($core, $path){
+	$path = mb_strtolower($path);
 	$path = preg_replace('#/+#','/',$_POST["path"]);
 	$path = trim($path, "/");
 	$arrPath = explode("/", $path);
+	foreach ($arrPath as $k => $currPathPart) {
+		if ($currPathPart == $core->getMainDir()){
+			unset($arrPath[$k]);
+		}
+	}
 	$arrPath = array_values($arrPath);
-	if (count($arrPath) < 3){
-		for ($i = 0 ; $i < 3 ; $i++){
-			/*$currPath = $arrPath[$i];
-			if ($currPath == $core->getMainDir()){
-				$i--;
-				continue;
-			}*/
-			if (!isset($arrPath[$i])){
-				$arrPath[$i] = "index";
-			}
-		}
-	}
+	$path = implode("/", $arrPath);
+	if ($path == "") $path = "/";
 
-	$i = 0;
-	$currControllerCall = [];
-	foreach ($arrPath as $currPath) {
-		if ($currPath == $core->getMainDir()){
-			continue;
-		}
-
-		if ($i < count($arrPath)-2){
-			$currControllerCall[] = $currPath;
-			// error_log(implode(".", $currControllerCall));
-		} else {
-			// error_log(implode(".", $currControllerCall));
-			$currController = $core->getController(implode(".", $currControllerCall));
-			echo json_encode($currController->$currPath(json_decode($_POST["getData"]), json_decode($_POST["formData"])));
-		}
-		$i++;
-	}
-} catch (Exception $e) {
-	$currController = $core->getController("error.404");
-	echo json_encode($currController->index(array("path" => $path)));
+	return $path;
 }

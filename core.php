@@ -84,7 +84,7 @@ class Core {
 		return $strFileName;
 	}
 
-	public function getController($path){
+	/*public function getController($path){
 		$arrModel = explode(".", $path);
 		if (!is_file($this->getControllerFile($arrModel))){
 			throw new Exception("El controller ".$path." no se pudo encontrar", 2);
@@ -114,7 +114,7 @@ class Core {
 		}
 		$strFileName = trim($strFileName, "_");
 		return $strFileName;
-	}
+	}*/
 
 	public function getMainDir(){ //TODO
 		return "pwafw";
@@ -126,6 +126,7 @@ class Core {
 	}
 
 	public function end(){
+		die();
 		return;
 	}
 }
