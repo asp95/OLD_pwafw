@@ -87,7 +87,7 @@ CREATE TABLE `core_controller` (
   `core_controller_id` int(11) NOT NULL AUTO_INCREMENT,
   `path` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`core_controller_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='rutas del sistema';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -114,7 +114,7 @@ CREATE TABLE `core_controller_component` (
   `order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`core_controller_component_id`),
   KEY `core_controller_id` (`core_controller_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COMMENT='que componentes tiene cada ruta';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -136,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-11  0:49:38
+-- Dump completed on 2019-02-11  1:00:25

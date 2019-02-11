@@ -85,7 +85,6 @@ var core = {
 				continue;
 			}
 			if (componentName == "_clear_"){
-				continue;
 				var arrClearComponents = document.querySelectorAll(arrDesign[componentName]+" > *");
 				for(var i = 0 ; i < arrClearComponents.length ; i++){
 					arrClearComponents[i].classList.add("closing");
@@ -195,8 +194,8 @@ var core = {
 	link : {
 		handle : function(element, event){
 			if (element.href.split("/")[3] == MAIN_DIR.split("/")[0] && element.href.split("/")[2] == document.location.host){
-				console.log("LL");
-				history.replaceState({}, "", element.href);
+				history.pushState({}, "", element.href);
+				core.init();
 				event.preventDefault();
 				return false;
 			} 
