@@ -24,6 +24,34 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pwafw` /*!40100 DEFAULT CHARACTER SET 
 USE `pwafw`;
 
 --
+-- Table structure for table `core_component`
+--
+
+DROP TABLE IF EXISTS `core_component`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `core_component` (
+  `core_component_id` int(11) NOT NULL AUTO_INCREMENT,
+  `component_name` varchar(255) DEFAULT NULL COMMENT 'el nombre del componente. respeta la nomenclatura de los models',
+  `design_path` varchar(255) DEFAULT NULL COMMENT 'esta info se manda a front. Donde se ubica este componente (CSS path)',
+  `clear_path` varchar(255) DEFAULT NULL COMMENT 'Cuando se use este componente, que sección de la página se debe limpiar (borrar el contenido) antes. Puede estar vacío.',
+  `data_model` varchar(255) DEFAULT NULL COMMENT 'Model que se va a usar para enviar la info dataModel al front (que después se usa para llenar el component + procesar en JS)',
+  PRIMARY KEY (`core_component_id`),
+  UNIQUE KEY `component_name` (`component_name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='core_model_controller se encarga de armar la estuctura de datos necesaria para enviar al front (los components, el design, el dataModel)';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `core_component`
+--
+
+LOCK TABLES `core_component` WRITE;
+/*!40000 ALTER TABLE `core_component` DISABLE KEYS */;
+INSERT INTO `core_component` VALUES (1,'error_404','#main-content','#main-content','core.error.404'),(2,'index_index','#main-content','#main-content','core.config.data');
+/*!40000 ALTER TABLE `core_component` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `core_config_data`
 --
 
@@ -57,13 +85,9 @@ DROP TABLE IF EXISTS `core_controller`;
  SET character_set_client = utf8mb4 ;
 CREATE TABLE `core_controller` (
   `core_controller_id` int(11) NOT NULL AUTO_INCREMENT,
-  `component_name` varchar(255) DEFAULT NULL COMMENT 'el nombre del componente. respeta la nomenclatura de los models',
-  `design_path` varchar(255) DEFAULT NULL COMMENT 'esta info se manda a front. Donde se ubica este componente (CSS path)',
-  `clear_path` varchar(255) DEFAULT NULL COMMENT 'Cuando se use este componente, que sección de la página se debe limpiar (borrar el contenido) antes. Puede estar vacío.',
-  `data_model` varchar(255) DEFAULT NULL COMMENT 'Model que se va a usar para enviar la info dataModel al front (que después se usa para llenar el component + procesar en JS)',
-  PRIMARY KEY (`core_controller_id`),
-  UNIQUE KEY `component_name` (`component_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='core_model_controller se encarga de armar la estuctura de datos necesaria para enviar al front (los components, el design, el dataModel)';
+  `path` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`core_controller_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -72,8 +96,35 @@ CREATE TABLE `core_controller` (
 
 LOCK TABLES `core_controller` WRITE;
 /*!40000 ALTER TABLE `core_controller` DISABLE KEYS */;
-INSERT INTO `core_controller` VALUES (1,'error_404','#main-content','#main-content','core.error.404');
+INSERT INTO `core_controller` VALUES (1,'[404]'),(2,'/');
 /*!40000 ALTER TABLE `core_controller` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `core_controller_component`
+--
+
+DROP TABLE IF EXISTS `core_controller_component`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `core_controller_component` (
+  `core_controller_component_id` int(11) NOT NULL AUTO_INCREMENT,
+  `core_controller_id` int(11) DEFAULT NULL,
+  `core_component_id` int(11) DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`core_controller_component_id`),
+  KEY `core_controller_id` (`core_controller_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `core_controller_component`
+--
+
+LOCK TABLES `core_controller_component` WRITE;
+/*!40000 ALTER TABLE `core_controller_component` DISABLE KEYS */;
+INSERT INTO `core_controller_component` VALUES (1,1,1,0),(2,2,2,1);
+/*!40000 ALTER TABLE `core_controller_component` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -85,4 +136,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-10  2:21:31
+-- Dump completed on 2019-02-11  0:49:38
