@@ -31,6 +31,11 @@ class core_model_db_model extends core_model_mainobject{
 			throw new Exception("Fallo al conectar a MySQL: " . $this->_sql->connect_error);
 		}
 
+		if (!$this->_sql){
+			throw new Exception("load: sin conexion a DB", 5);
+			return false;
+		}
+
 		return $this->_sql;
 	}
 
@@ -58,9 +63,13 @@ class core_model_db_model extends core_model_mainobject{
 			$sqlLoad .= $this->getPrimaryIdx();
 		}
 
-		$sqlLoad .= " = '".$id."'";
+		$sqlLoad .= " = '".$this->_getSql()->real_escape_string($id)."'";
 
 		$curLoad = $this->_getSql()->query($sqlLoad);
+		error_log(var_export($sqlLoad, true));
+		if (!$curLoad){
+			throw new Exception("load: sin conexion a DB", 6);
+		}
 
 		$this->setData($curLoad->fetch_assoc());
 		$this->_select = $sqlLoad;
